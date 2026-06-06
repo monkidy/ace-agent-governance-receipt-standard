@@ -1,6 +1,7 @@
 {
-  "name": "ace-agent-governance-receipt-standard-v0",
-  "status": "reviewed_pending_human_publication",
+  "name": "ace-agent-governance-receipt-standard",
+  "version": "v0",
+  "status": "published",
   "runtime_effect": "none",
   "publication_authority": "human_only",
   "license": "Apache-2.0",
