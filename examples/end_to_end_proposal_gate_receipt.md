@@ -1,70 +1,114 @@
-# Example 1 — Clean refusal
+# Example 3: End-to-end proposal, gate, receipt
 
-This example shows an agent refusing to publish because the filtering gate failed.
+This example shows a full chain: mandate, proposal, gate, receipt, closeout.
 
-## Mandate
+## 1. Mandate
 
 ```yaml
 schema_version: agent_mandate.v0
-mandate_id: mandate-public-doc-review-001
-agent_role: documentation reviewer
-scope_name: public documentation draft
+mandate_id: mandate-doc-package-001
+agent_role: documentation packaging assistant
+scope_name: public documentation package
 autonomy_mode: 2
 lifecycle_state: ACTIVE
 allowed_automation:
-  - review draft files
-  - identify publication blockers
-  - propose edits
+  - assemble markdown files
+  - check internal links
+  - verify license file exists
+  - produce a publication checklist
 blocked_ungated_actions:
-  - publish files
-  - send messages
-  - remove license terms
-  - expose private information
-evidence_requirement: every blocker must cite the file and section
+  - publish repository
+  - change license
+  - include private information
+  - contact external people
+evidence_requirement: every publication proposal must include license, filtering, and example checks
 receipt_required: true
+governor_walls:
+  - no external publication without human review
+  - no private information
+  - license must be present
 revocation_conditions:
   - human override
-  - private information detected
-  - attempted publication
+  - missing license
+  - private information found
+  - attempted publication without review
 human_override_absolute: true
 ```
 
-## Next best action
+## 2. Proposal
 
 ```yaml
 schema_version: next_best_action.v0
-action_id: nba-public-doc-001
-proposing_scope: public_documentation
-kind: refusal
-summary: refuse publication because private information remains
-refusal_reason: the draft contains private or project-specific references that require human removal
+action_id: nba-doc-package-001
+proposing_scope: public_documentation_package
+kind: proposal
+summary: package is ready for human publication review
+proposed_action: publish the documentation package to a public repository
+required_gate: human_publication_review
 evidence:
-  - filtering checklist failed
-admissible: false
-display_line: publication refused, filtering incomplete
+  - LICENSE present
+  - filtering checklist complete
+  - examples included
+  - no private references found by agent review
+admissible: true
+display_line: documentation package ready for human review, not yet publishable
 ```
 
-## Receipt
+## 3. Gate result
+
+```yaml
+gate_id: human_publication_review
+gate_result: passed
+reviewed_by: human_operator
+reviewed_at: 2026-06-06T12:00:00Z
+conditions_checked:
+  - Apache-2.0 license present
+  - no private references
+  - no secrets
+  - examples readable
+  - no claim of autonomous runtime
+```
+
+## 4. Receipt
 
 ```yaml
 schema_version: outbound_action_receipt.v0
-receipt_id: receipt-public-doc-001
-mandate_id: mandate-public-doc-review-001
-action_ref: nba-public-doc-001
-scope_name: public_documentation
-acted_at: 2026-06-06T10:00:00Z
-action_summary: publication did not occur because filtering failed
-gate_passed: filtering_gate_failed
+receipt_id: receipt-doc-package-001
+mandate_id: mandate-doc-package-001
+action_ref: nba-doc-package-001
+scope_name: public_documentation_package
+acted_at: 2026-06-06T12:10:00Z
+action_summary: documentation package approved for publication after human review
+gate_passed: human_publication_review
 governor_walls_checked:
+  - license present
+  - filtering complete
   - no private information
-  - no unapproved publication
-stop_condition_asserted: true
+  - no external action before gate
+stop_condition_asserted: false
 evidence:
-  - filtering checklist failed
-outcome: refused
-closeout_ref: closeout-public-doc-001
+  - gate human_publication_review passed
+  - filtering checklist complete
+  - examples present
+  - runtime claims absent
+outcome: completed
+closeout_ref: closeout-doc-package-001
+```
+
+## 5. Closeout
+
+```yaml
+closeout_id: closeout-doc-package-001
+status: closed
+summary: publication gate passed and receipt recorded
+open_loops:
+  - none
 ```
 
 ## Lesson
 
-A refusal is a valid system output.
+The governance value is the chain, not the agent.
+
+```text
+mandate -> proposal -> gate -> receipt -> closeout
+```

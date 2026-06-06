@@ -1,31 +1,31 @@
-# Example 2 — Proposed but not authorized
+# Example 1: Clean refusal
 
-This example shows a useful action that cannot proceed until the required gate passes.
+This example shows an agent refusing to publish because the filtering gate failed.
 
 ## Mandate
 
 ```yaml
 schema_version: agent_mandate.v0
-mandate_id: mandate-release-note-001
-agent_role: release note assistant
-scope_name: draft release notes
+mandate_id: mandate-public-doc-review-001
+agent_role: documentation reviewer
+scope_name: public documentation draft
 autonomy_mode: 2
 lifecycle_state: ACTIVE
 allowed_automation:
-  - read approved changelog entries
-  - draft release notes
-  - propose publication text
+  - review draft files
+  - identify publication blockers
+  - propose edits
 blocked_ungated_actions:
-  - publish release notes
-  - tag a release
-  - notify users
-  - modify production configuration
-evidence_requirement: every release note must cite an approved changelog entry
+  - publish files
+  - send messages
+  - remove license terms
+  - expose private information
+evidence_requirement: every blocker must cite the file and section
 receipt_required: true
 revocation_conditions:
   - human override
-  - missing changelog evidence
-  - attempted external publication
+  - private information detected
+  - attempted publication
 human_override_absolute: true
 ```
 
@@ -33,41 +33,38 @@ human_override_absolute: true
 
 ```yaml
 schema_version: next_best_action.v0
-action_id: nba-release-note-001
-proposing_scope: release_notes
-kind: proposal
-summary: publish release notes after human review
-proposed_action: publish the prepared release notes
-required_gate: human_publication_review
+action_id: nba-public-doc-001
+proposing_scope: public_documentation
+kind: refusal
+summary: refuse publication because private information remains
+refusal_reason: the draft contains private or project-specific references that require human removal
 evidence:
-  - approved changelog entries reviewed
-  - draft release notes prepared
-admissible: true
-display_line: release note candidate ready, publication gate required
+  - filtering checklist failed
+admissible: false
+display_line: publication refused, filtering incomplete
 ```
 
 ## Receipt
 
 ```yaml
 schema_version: outbound_action_receipt.v0
-receipt_id: receipt-release-note-001
-mandate_id: mandate-release-note-001
-action_ref: nba-release-note-001
-scope_name: release_notes
-acted_at: 2026-06-06T11:00:00Z
-action_summary: release notes were not published because the human publication gate had not passed
-gate_passed: human_publication_review_not_passed
+receipt_id: receipt-public-doc-001
+mandate_id: mandate-public-doc-review-001
+action_ref: nba-public-doc-001
+scope_name: public_documentation
+acted_at: 2026-06-06T10:00:00Z
+action_summary: publication did not occur because filtering failed
+gate_passed: filtering_gate_failed
 governor_walls_checked:
-  - no external publication without review
-  - no user notification without review
-stop_condition_asserted: false
+  - no private information
+  - no unapproved publication
+stop_condition_asserted: true
 evidence:
-  - proposed action required human_publication_review
-  - no approval record present
-outcome: rejected_at_gate
-closeout_ref: closeout-release-note-001
+  - filtering checklist failed
+outcome: refused
+closeout_ref: closeout-public-doc-001
 ```
 
 ## Lesson
 
-A proposal can be good and still not be authorized.
+A refusal is a valid system output.

@@ -1,4 +1,4 @@
-# Example 2 — Proposed but not authorized
+# Example 2: Proposed but not authorized
 
 This example shows a useful action that cannot proceed until the required gate passes.
 
