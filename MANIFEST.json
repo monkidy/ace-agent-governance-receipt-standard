@@ -1,0 +1,22 @@
+{
+  "name": "ace-agent-governance-receipt-standard-v0",
+  "status": "reviewed_pending_human_publication",
+  "runtime_effect": "none",
+  "publication_authority": "human_only",
+  "license": "Apache-2.0",
+  "files": [
+    "FILTERING_LOG.md",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "agent_mandate.v0.md",
+    "checklist.md",
+    "examples/end_to_end_proposal_gate_receipt.md",
+    "examples/proposed_not_authorized.md",
+    "examples/refused_action.md",
+    "next_best_action.v0.md",
+    "outbound_action_receipt.v0.md"
+  ],
+  "copyright": "2026 Hichem Benali",
+  "maintainer_github": "monkidy"
+}
