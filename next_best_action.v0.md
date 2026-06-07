@@ -1,104 +1,89 @@
-# Next Best Action v0
+﻿# Next Best Action v0
 
-Status: Documentation standard.  
-Runtime effect: None.
+A Next Best Action is a proposed action before execution.
 
-A Next Best Action record describes a proposal, a refusal, or a no-action verdict.
+It is not permission to act.
 
-A proposal is not an action. It carries the gate that would be required before action.
+## Proposal
 
-## Required fields
-
-```yaml
-schema_version: next_best_action.v0
-action_id: string
-proposing_scope: string
-kind: proposal | refusal | no_action
-summary: string
+```text
+proposal_id:
+agent:
+operator:
+created_at:
 ```
 
-## Optional fields
+## Recommended action
 
-```yaml
-proposed_action: string
-required_gate: string
-evidence:
-  - string
-refusal_reason: string
-admissible: boolean
-display_line: string
+```text
+I recommend:
 ```
 
-## Kinds
+## Why
 
-### `proposal`
-
-Use when an action may be useful, but still requires a gate.
-
-A proposal should include:
-
-```yaml
-required_gate: string
-proposed_action: string
-evidence:
-  - string
-admissible: true | false
+```text
+Reason:
 ```
 
-### `refusal`
+## Scope
 
-Use when the agent or system should not proceed.
-
-A refusal should include:
-
-```yaml
-refusal_reason: string
-admissible: false
+```text
+files_or_systems_affected:
+external_systems_affected:
+expected_output:
 ```
 
-### `no_action`
+## Action class
 
-Use when doing nothing is the best outcome.
-
-A no-action verdict should include:
-
-```yaml
-refusal_reason: string
+```text
+action_class:
+- READ_ONLY
+- DRAFT_ONLY
+- LOCAL_FILE_CHANGE
+- EXTERNAL_ACTION
+- SENSITIVE_ACTION
 ```
 
-## Example: proposal
+## Required approval
 
-```yaml
-schema_version: next_best_action.v0
-action_id: nba-doc-2026-001
-proposing_scope: documentation_review
-kind: proposal
-summary: publish the cleaned documentation draft after human review
-proposed_action: publish the reviewed documentation draft to the public repository
-required_gate: human_publication_review
-evidence:
-  - checklist completed
-  - license file present
-  - private references removed
-admissible: true
-display_line: publication candidate ready, human review required
+```text
+approval_required:
+approval_reason:
+approval_expiry:
 ```
 
-## Example: refusal
+## Risk
 
-```yaml
-schema_version: next_best_action.v0
-action_id: nba-doc-2026-002
-proposing_scope: documentation_review
-kind: refusal
-summary: refuse publication because private references remain
-refusal_reason: private references were found in the draft
-evidence:
-  - filtering checklist failed
-admissible: false
-display_line: publication refused, filtering incomplete
+```text
+risk_level:
+- LOW
+- MEDIUM
+- HIGH
+
+risk_notes:
 ```
 
-## Rule
+## Reversibility
 
-A suggested next step is still only a suggestion until the required gate passes.
+```text
+rollback_possible:
+rollback_plan:
+```
+
+## Evidence expected
+
+```text
+receipt_required:
+tests_required:
+diff_required:
+```
+
+## Decision
+
+```text
+decision:
+- PROPOSED
+- APPROVED
+- REFUSED
+- DEFERRED
+```

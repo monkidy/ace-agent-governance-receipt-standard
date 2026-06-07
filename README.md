@@ -1,131 +1,145 @@
-# ACE Agent Governance Receipt Standard v0
+﻿# ACE Agent Governance Receipt Standard
 
-**How to keep AI agents bounded, traceable, and revocable.**
+**A small, practical standard for keeping AI agents bounded, traceable, and revocable.**
 
-Status: Draft for human review.  
-Runtime effect: None.  
-This repository documents a governance pattern. It does not provide an autonomous agent system, a runtime, a deployment framework, or permission for any agent to act on the outside world.
+Most AI-agent workflows fail in the same place: the agent can propose, act, or claim progress without leaving enough evidence for a human operator to know what happened.
+
+This standard defines a minimal public pattern:
+
+1. **Mandate** - what the agent is allowed to do.
+2. **Next Best Action** - what the agent proposes before acting.
+3. **Outbound Action Receipt** - what actually happened, with evidence and boundaries.
+
+It is not a runtime.  
+It is not a framework.  
+It is not permission for an agent to act.
+
+It is a simple governance layer for teams that want AI agents to remain bounded, auditable, and reversible.
+
+---
 
 ## Why this exists
 
-Teams are increasingly giving AI agents access to tools, repositories, tickets, files, messages, and operational workflows.
+AI agents should not only answer.
 
-The risk is not only that an agent makes a mistake. The deeper risk is that nobody can clearly answer:
+They should leave evidence.
 
-- What was this agent allowed to do?
-- What was it forbidden to do?
-- Was this an action, a proposal, or a refusal?
-- Which gate was required before acting?
-- What proof exists after the action?
-- Who can revoke the mandate?
+A useful agent system needs to answer three questions quickly:
 
-This standard gives a small, practical vocabulary for answering those questions.
+- **Can this agent act, or only propose?**
+- **What proof did it leave?**
+- **Who can refuse, revoke, or review the action?**
 
-## Core idea
+This repo gives a compact, reusable shape for that.
 
-An agent should not be treated as a magic assistant or a sovereign operator.
+---
 
-An agent should operate under a mandate.
+## The three documents
 
-A mandate defines:
+### `agent_mandate.v0.md`
 
-- the agent role,
-- its current lifecycle state,
-- what it may automate,
-- what it may not do without a gate,
-- what evidence it must produce,
-- how and when it can be revoked,
-- whether a human override exists.
+Defines the agent boundary.
 
-A proposed action is not an action.  
-A passed check is not permission.  
-A receipt proves what happened after the fact; it does not authorize the action.
+It answers:
 
-## The three records
+- what the agent is;
+- what it may do;
+- what it must never do;
+- what evidence it must leave;
+- when it must stop.
 
-This standard uses three public records:
+### `next_best_action.v0.md`
 
-1. `agent_mandate.v0.md`  
-   Defines the agent's bounded mandate.
+Defines a proposed action before execution.
 
-2. `next_best_action.v0.md`  
-   Defines a proposal, refusal, or no-action verdict. A proposal must name the gate required before it can become action.
+It answers:
 
-3. `outbound_action_receipt.v0.md`  
-   Defines the after-the-fact proof record for an action, refusal, or gate rejection.
+- what the agent wants to do next;
+- why;
+- what files, systems, or people it would affect;
+- what risks exist;
+- what approval is required.
 
-## Minimal operating loop
+### `outbound_action_receipt.v0.md`
 
-```text
-mandate -> proposal/refusal -> gate -> action or refusal -> receipt -> closeout
-```
+Defines the proof left after an action or refusal.
 
-The loop is intentionally conservative:
+It answers:
 
-```text
-no mandate = no action
-no gate = no outbound action
-no receipt = no durable proof
-revoked mandate = stop
-expired mandate = stop
-human override = absolute
-```
+- what happened;
+- what did not happen;
+- what evidence exists;
+- what boundary was respected;
+- what remains unresolved.
 
-## What this standard is
+---
 
-- A documentation standard.
-- A lightweight governance pattern for AI-agent operations.
-- A reusable checklist for deciding whether an agent can act or only propose.
-- A public, generic extraction of a bounded-agent governance model.
+## Core rule
 
-## What this standard is not
+> A proposal is not an action.  
+> A receipt is not a claim.  
+> A human approval gate is not optional.
 
-- Not an autonomous firm.
-- Not a live runtime.
-- Not a trading, finance, legal, medical, or security product.
-- Not a deployment framework.
-- Not a replacement for human responsibility.
-- Not permission for any agent to email, publish, merge, spend money, access secrets, or modify external systems.
+---
 
-## Repository contents
+## Quick start
 
-```text
-.
-├── README.md
-├── LICENSE
-├── MANIFEST.json
-├── NOTICE
-├── agent_mandate.v0.md
-├── next_best_action.v0.md
-├── outbound_action_receipt.v0.md
-├── checklist.md
-├── FILTERING_LOG.md
-└── examples/
-    ├── refused_action.md
-    ├── proposed_not_authorized.md
-    └── end_to_end_proposal_gate_receipt.md
-```
-
-## Recommended use
-
-Use this standard before connecting an agent to any tool that can change the world.
-
-Start with the checklist:
+Use the checklist first:
 
 ```text
 Can this agent act, or only propose?
 ```
 
-Then write the mandate.
+Then require the three artifacts:
 
-Then require every proposed action to name its gate.
+```text
+agent_mandate.v0.md
+next_best_action.v0.md
+outbound_action_receipt.v0.md
+```
 
-Then require every acted or refused decision to produce a receipt.
-
-## License
-
-Apache License 2.0.
+For sensitive actions, keep the agent in proposal mode unless a human operator explicitly authorizes the action.
 
 ---
 
-© 2026 Hichem Benali · GitHub: [@monkidy](https://github.com/monkidy) · Part of the ACE project.
+## Examples
+
+See `examples/`:
+
+- `refused_action.md` - the agent refuses cleanly.
+- `proposed_not_authorized.md` - the agent proposes, but does not act.
+- `proposal_gate_receipt_chain.md` - proposal -> gate -> receipt.
+
+---
+
+## What this standard is good for
+
+- AI coding agents
+- research agents
+- content assistants
+- workflow automation
+- operations assistants
+- multi-agent coordination
+- PR review and handoff workflows
+
+---
+
+## What this standard does not do
+
+This standard does not grant:
+
+- runtime authority;
+- merge authority;
+- send authority;
+- trading authority;
+- wallet authority;
+- deployment authority;
+- human approval authority.
+
+It helps you describe and verify those boundaries.
+
+---
+
+## License
+
+Apache-2.0.

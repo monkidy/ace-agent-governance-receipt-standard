@@ -1,49 +1,54 @@
-# Checklist
+﻿# Can this agent act, or only propose?
 
-Status: Documentation standard.  
-Runtime effect: None.
+Use this checklist before allowing an AI agent to affect anything outside its own draft.
 
-Use this checklist before connecting an agent to any tool that can change the world.
+## 1. Mandate
 
-## First question
+- [ ] Is there a written mandate?
+- [ ] Is the agent role explicit?
+- [ ] Are allowed actions listed?
+- [ ] Are forbidden actions listed?
+- [ ] Is the stop condition clear?
+- [ ] Is the human operator identified?
 
-Can this agent act, or only propose?
+## 2. Action class
 
-If you cannot answer this in one sentence, the agent is not ready to be connected.
+- [ ] Is this read-only?
+- [ ] Is this draft-only?
+- [ ] Does this mutate files?
+- [ ] Does this affect external systems?
+- [ ] Does this send a message, publish, deploy, trade, spend, sign, or transfer?
+- [ ] Does this require human approval?
 
-## Before granting a mandate
+## 3. Evidence
 
-- [ ] The agent role is written in one line.
-- [ ] The scope is named and bounded.
-- [ ] The autonomy mode is set and justified.
-- [ ] Allowed automation is listed explicitly.
-- [ ] Blocked ungated actions are listed explicitly.
-- [ ] Revocation conditions are listed.
-- [ ] A human override exists and cannot be disabled.
-- [ ] The lifecycle state is set, and is not ACTIVE by default.
+- [ ] What source was read?
+- [ ] What file or system would change?
+- [ ] What receipt will be produced?
+- [ ] Can the action be reversed?
+- [ ] Is there a before/after diff?
 
-## Before any outbound action
+## 4. Authority
 
-- [ ] The action was proposed, not assumed.
-- [ ] The proposal names the gate required before acting.
-- [ ] The gate has a named human or process responsible for it.
-- [ ] A passed check is not treated as permission.
+- [ ] Is approval explicit?
+- [ ] Is approval fresh?
+- [ ] Is approval scoped?
+- [ ] Is approval revocable?
+- [ ] Is the agent confusing a suggestion with permission?
 
-## After any action or refusal
+## 5. Safe outcome
 
-- [ ] A receipt records what actually happened.
-- [ ] The receipt names the mandate and the gate.
-- [ ] The receipt does not claim to authorize the action.
-- [ ] Open loops are listed or closed.
+If any answer is unclear:
 
-## Stop conditions
+```text
+The agent may propose.
+The agent may not act.
+```
 
-- [ ] No mandate means no action.
-- [ ] No gate means no outbound action.
-- [ ] No receipt means no durable proof.
-- [ ] A revoked or expired mandate means stop.
-- [ ] Human override is absolute.
+If the action is sensitive:
 
-## Rule
-
-If the agent cannot produce a receipt, it should not act.
+```text
+Human approval required.
+Receipt required.
+Revocation path required.
+```
