@@ -1,0 +1,87 @@
+{
+  "schema_version": "ace.refusal_receipt.v0",
+  "receipt_id": "rr_example_external_send_001",
+  "receipt_type": "refusal_receipt",
+  "status": "NOT_AUTHORIZED",
+  "created_at": "2026-06-09T12:05:00Z",
+  "emitted_before_execution": true,
+  "mandate_id": "mandate_comms_agent_draft_only_v0",
+  "proposal_id": "proposal_send_external_message_001",
+  "agent_context": {
+    "agent_id": "comms-agent-v0",
+    "agent_role": "communications_assistant",
+    "operator": "hichem",
+    "workspace": "public-example",
+    "action_class": "EXTERNAL_ACTION",
+    "boundary_mode": "draft_only",
+    "approval_state": "MISSING"
+  },
+  "requested_action": {
+    "type": "external_send",
+    "target": "external_contact@example.com",
+    "purpose": "send a message to an external contact",
+    "expected_side_effect": "send outbound message outside the workspace"
+  },
+  "policy": {
+    "policy_id": "ace.human_bounds.external_send.v0",
+    "policy_name": "External send requires explicit human approval",
+    "rule_id": "external_send_approval_missing",
+    "reason": "The agent may draft messages, but may not send externally without explicit operator approval."
+  },
+  "decision": {
+    "decision_id": "deny_external_send_001",
+    "result": "NOT_AUTHORIZED",
+    "checks_run": [
+      "mandate_present",
+      "requested_action_detected",
+      "external_action_classified",
+      "approval_required_checked",
+      "approval_missing"
+    ],
+    "refusal_reasons": [
+      "external_send_not_authorized",
+      "human_approval_missing"
+    ]
+  },
+  "no_side_effect_attestation": {
+    "execution_started": false,
+    "actual_action": "none",
+    "side_effects_detected": false,
+    "write_operations_made": false,
+    "external_calls_made": false,
+    "files_modified": [],
+    "commands_run": [],
+    "runtime_action_id": "none",
+    "outbound_request_id": "none",
+    "proof": [
+      "no send API was called",
+      "no outbound message id exists",
+      "external_calls_made=false",
+      "decision emitted before send path"
+    ]
+  },
+  "integrity": {
+    "method": "hash_chain",
+    "content_hash": "sha256:REPLACE_WITH_CANONICAL_RECEIPT_HASH",
+    "chain_anchor": "public-example"
+  },
+  "replay": {
+    "replay_inputs": [
+      "mandate_comms_agent_draft_only_v0",
+      "requested_action.type=external_send",
+      "action_class=EXTERNAL_ACTION",
+      "boundary_mode=draft_only",
+      "approval_state=MISSING"
+    ],
+    "verification_steps": [
+      "load active mandate",
+      "confirm external sends require approval",
+      "confirm approval is missing",
+      "verify no send API call or outbound id exists",
+      "expect NOT_AUTHORIZED before execution"
+    ],
+    "expected_result": "NOT_AUTHORIZED before execution because external send approval is missing"
+  },
+  "safe_next_action": "Draft the message for operator review. Do not send unless a new explicit approval is recorded.",
+  "human_review_required": true
+}
