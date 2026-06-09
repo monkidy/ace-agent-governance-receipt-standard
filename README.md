@@ -4,6 +4,8 @@
 
 New here? Start with [`START_HERE.md`](START_HERE.md). It explains the project in plain English, with no technical background required.
 
+Prefer a visual explanation? Open [`VISUAL_OVERVIEW.md`](VISUAL_OVERVIEW.md) for diagrams and one-screen tables.
+
 ## The simple question
 
 How do we know an AI agent stayed inside its limits?
@@ -55,8 +57,9 @@ You do not need to understand ACE internals to use this repository.
 If you have 2 minutes:
 
 1. Read [`START_HERE.md`](START_HERE.md).
-2. Open `examples/refusal-receipts/external-send.not-authorized.json`.
-3. Look for `requested_action`, `policy`, `no_side_effect_attestation`, and `safe_next_action`.
+2. View [`VISUAL_OVERVIEW.md`](VISUAL_OVERVIEW.md).
+3. Open `examples/refusal-receipts/external-send.not-authorized.json`.
+4. Look for `requested_action`, `policy`, `no_side_effect_attestation`, and `safe_next_action`.
 
 If you are implementing:
 
@@ -103,6 +106,7 @@ A refusal without proof is only another claim.
 ## Files in this repo
 
 - `START_HERE.md` - plain English guide.
+- `VISUAL_OVERVIEW.md` - diagrams and one-screen tables.
 - `agent_mandate.v0.md` - template for agent boundaries.
 - `next_best_action.v0.md` - template for proposed actions.
 - `outbound_action_receipt.v0.md` - template for action and refusal records.
