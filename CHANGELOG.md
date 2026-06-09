@@ -9,6 +9,7 @@
 - Added public refusal receipt examples:
   - `examples/refusal-receipts/forbidden-write.refused.json`
   - `examples/refusal-receipts/external-send.not-authorized.json`
+- Added `tools/validate-refusal-receipts.py`, a stdlib-only validator for refusal receipt examples.
 
 ### Changed
 
@@ -26,3 +27,4 @@
 - This standard remains public and declarative.
 - Runtime enforcement belongs in implementations.
 - Receipts Over Claims and fail-closed behavior remain the foundation.
+- The validation script is intentionally dependency-free. CI workflow automation can be added later if explicitly enabled.
