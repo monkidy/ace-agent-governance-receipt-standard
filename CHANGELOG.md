@@ -10,9 +10,11 @@
   - `examples/refusal-receipts/forbidden-write.refused.json`
   - `examples/refusal-receipts/external-send.not-authorized.json`
 - Added `tools/validate-refusal-receipts.py`, a stdlib-only validator for refusal receipt examples.
+- Added `START_HERE.md`, a plain English guide for non-technical readers.
 
 ### Changed
 
+- Rewrote the README to be understandable by first-time public visitors before technical readers.
 - Clarified that a refusal receipt is a specialized outbound action receipt.
 - Clarified that credible refusal receipts must be emitted before execution.
 - Clarified minimum refusal evidence:
