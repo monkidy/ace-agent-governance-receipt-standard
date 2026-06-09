@@ -6,6 +6,8 @@ New here? Start with [`START_HERE.md`](START_HERE.md). It explains the project i
 
 Prefer a visual explanation? Open [`VISUAL_OVERVIEW.md`](VISUAL_OVERVIEW.md) for diagrams and one-screen tables.
 
+Current status: [`PUBLIC_READER_FIRST_VISUAL_V0`](STATUS.md).
+
 ## The simple question
 
 How do we know an AI agent stayed inside its limits?
@@ -107,6 +109,9 @@ A refusal without proof is only another claim.
 
 - `START_HERE.md` - plain English guide.
 - `VISUAL_OVERVIEW.md` - diagrams and one-screen tables.
+- `STATUS.md` - current maturity and proof status.
+- `CONTRIBUTING.md` - contribution rules for keeping the standard small and clear.
+- `docs/REPO_MODEL_CHECKLIST.md` - reusable checklist for future ACE public repos.
 - `agent_mandate.v0.md` - template for agent boundaries.
 - `next_best_action.v0.md` - template for proposed actions.
 - `outbound_action_receipt.v0.md` - template for action and refusal records.
@@ -170,7 +175,7 @@ Every ACE-related public repository should answer these questions near the top o
 6. What does this repo not do?
 7. What is the current status?
 
-This is the default standard for future ACE repo cleanup.
+This is the default standard for future ACE repo cleanup. See [`docs/REPO_MODEL_CHECKLIST.md`](docs/REPO_MODEL_CHECKLIST.md).
 
 ## License
 
