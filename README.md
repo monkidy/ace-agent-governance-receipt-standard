@@ -2,6 +2,44 @@
 
 **A small, practical standard for keeping AI agents bounded, traceable, and revocable.**
 
+## Start here
+
+This repository is for anyone asking a simple question:
+
+> How do we know an AI agent stayed inside its limits?
+
+The answer in this repo is: make the agent leave small, checkable records before and after important decisions.
+
+In plain language:
+
+- a **mandate** says what the agent is allowed to do;
+- a **next best action** says what the agent wants to do before it acts;
+- a **receipt** records what happened, what did not happen, and what evidence exists;
+- a **refusal receipt** records why the agent did **not** act.
+
+If you are not technical, read this README and the examples.  
+If you are technical, read the schema and validator.  
+If you are evaluating risk, start with the refusal receipt requirements.
+
+---
+
+## Who this is for
+
+This standard is useful for:
+
+- builders of AI agents;
+- founders and operators using AI automation;
+- compliance, legal, security, and risk teams;
+- researchers studying agent governance;
+- reviewers who need to inspect what an agent did or refused to do;
+- non-technical stakeholders who need a clear audit trail.
+
+You do not need to understand the internal ACE system to use this repo.
+
+---
+
+## What problem it solves
+
 Most AI-agent workflows fail in the same place: the agent can propose, act, refuse, or claim progress without leaving enough evidence for a human operator to know what happened.
 
 This standard defines a minimal public pattern:
@@ -17,6 +55,60 @@ It is not a framework.
 It is not permission for an agent to act.
 
 It is a simple governance layer for teams that want AI agents to remain bounded, auditable, and reversible.
+
+---
+
+## How to read this repo
+
+### If you only have 2 minutes
+
+Read:
+
+1. `README.md`
+2. `examples/refusal-receipts/forbidden-write.refused.json`
+3. `examples/refusal-receipts/external-send.not-authorized.json`
+
+You should leave with one idea: a credible AI system should prove both what it did and what it refused to do.
+
+### If you are implementing this
+
+Read:
+
+1. `agent_mandate.v0.md`
+2. `next_best_action.v0.md`
+3. `outbound_action_receipt.v0.md`
+4. `specs/refusal-receipt.schema.json`
+5. `tools/validate-refusal-receipts.py`
+
+### If you are reviewing risk
+
+Check whether every sensitive action has:
+
+- a mandate;
+- an approval gate;
+- a receipt;
+- a clear refusal path;
+- proof that no side effect happened when the action was denied.
+
+---
+
+## Quick example
+
+A user asks an agent to send an external message.
+
+The mandate says the agent may draft messages, but may not send them.
+
+The agent must refuse before sending. A refusal receipt should show:
+
+```text
+requested_action: external_send
+policy_that_fired: external_send_approval_missing
+execution_started: false
+external_calls_made: false
+safe_next_action: draft the message for human review
+```
+
+That is the core idea: **refusal with evidence, not refusal as a vague claim.**
 
 ---
 
@@ -44,6 +136,22 @@ This repo gives a compact, reusable shape for that.
 > A refusal is not a vague claim.  
 > A receipt is not evidence unless it can be checked.  
 > A human approval gate is not optional for sensitive actions.
+
+---
+
+## Key terms in simple words
+
+| Term | Plain meaning |
+| --- | --- |
+| Agent | The AI system or assistant trying to help. |
+| Operator | The human responsible for the system. |
+| Mandate | The written boundary around what the agent may do. |
+| Gate | A check that decides whether an action may continue. |
+| Receipt | A small record of what happened and what evidence exists. |
+| Refusal receipt | A receipt proving that the agent refused before acting. |
+| Side effect | Any real-world or system change, such as sending, writing, deploying, trading, or calling an external API. |
+| Replay | The ability to inspect the same inputs later and verify the same decision. |
+| Hash chain | A lightweight way to link records so later changes are detectable. |
 
 ---
 
@@ -188,6 +296,12 @@ For sensitive actions, keep the agent in proposal mode unless a human operator e
 
 For denied actions, require a refusal receipt before any execution attempt.
 
+To validate the refusal receipt examples locally:
+
+```bash
+python tools/validate-refusal-receipts.py
+```
+
 ---
 
 ## Examples
@@ -251,6 +365,22 @@ Agents may propose. Humans, mandates, and gates define what may execute.
 ### Receipts Over Claims
 
 A claim is not enough. A receipt should be replayable, inspectable, and verifiable.
+
+---
+
+## Reader-first rule for ACE repos
+
+Every ACE-related public repository should answer these questions near the top of its README:
+
+1. What is this?
+2. Who is it for?
+3. What problem does it solve?
+4. What should a non-technical reader read first?
+5. What should a technical reader inspect?
+6. What does this repo not do?
+7. What is the current status?
+
+This is now the default standard for future ACE repo cleanup.
 
 ---
 
