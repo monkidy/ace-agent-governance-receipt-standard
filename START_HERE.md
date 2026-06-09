@@ -2,6 +2,8 @@
 
 This page explains the repository without assuming you know AI governance, software engineering, or ACE.
 
+Prefer diagrams and tables? Open [`VISUAL_OVERVIEW.md`](VISUAL_OVERVIEW.md).
+
 ## The simple idea
 
 AI agents are becoming able to do more than answer questions. They can draft, edit files, call tools, send messages, trigger workflows, deploy software, or interact with outside systems.
@@ -105,7 +107,8 @@ It gives:
 - plain text templates;
 - a JSON schema for refusal receipts;
 - examples;
-- a small validator script.
+- a small validator script;
+- a visual overview.
 
 ## What this repository is not
 
@@ -142,8 +145,9 @@ Use this if you need a simple way to ask: what happened, what did not happen, an
 If you only want the idea:
 
 1. Read this file.
-2. Open `examples/refusal-receipts/external-send.not-authorized.json`.
-3. Look for these fields:
+2. Open [`VISUAL_OVERVIEW.md`](VISUAL_OVERVIEW.md).
+3. Open `examples/refusal-receipts/external-send.not-authorized.json`.
+4. Look for these fields:
    - `requested_action`
    - `policy`
    - `no_side_effect_attestation`
