@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/monkidy/ace-agent-governance-receipt-standard/specs/refusal-receipt.schema.json",
+  "title": "ACE Refusal Receipt v0",
+  "description": "A minimal receipt proving that an agent action was refused before execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "receipt_type",
+    "status",
+    "created_at",
+    "emitted_before_execution",
+    "agent_context",
+    "requested_action",
+    "policy",
+    "decision",
+    "no_side_effect_attestation",
+    "integrity",
+    "replay",
+    "safe_next_action"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "ace.refusal_receipt.v0"
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "receipt_type": {
+      "type": "string",
+      "const": "refusal_receipt"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["REFUSED", "DENIED", "NOT_AUTHORIZED"]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "emitted_before_execution": {
+      "type": "boolean",
+      "const": true
+    },
+    "mandate_id": {
+      "type": "string"
+    },
+    "proposal_id": {
+      "type": "string"
+    },
+    "agent_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent_id",
+        "agent_role",
+        "operator",
+        "workspace",
+        "action_class",
+        "boundary_mode",
+        "approval_state"
+      ],
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "agent_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "workspace": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_class": {
+          "type": "string",
+          "enum": [
+            "READ_ONLY",
+            "DRAFT_ONLY",
+            "LOCAL_FILE_CHANGE",
+            "EXTERNAL_ACTION",
+            "SENSITIVE_ACTION"
+          ]
+        },
+        "boundary_mode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_state": {
+          "type": "string",
+          "enum": ["PRESENT", "MISSING", "EXPIRED", "REVOKED", "NOT_REQUIRED"]
+        }
+      }
+    },
+    "requested_action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "target", "purpose"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_side_effect": {
+          "type": "string"
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "policy_name", "rule_id", "reason"],
+      "properties": {
+        "policy_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "result", "checks_run", "refusal_reasons"],
+      "properties": {
+        "decision_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "result": {
+          "type": "string",
+          "enum": ["REFUSED", "DENIED", "NOT_AUTHORIZED"]
+        },
+        "checks_run": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "refusal_reasons": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "no_side_effect_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_started",
+        "actual_action",
+        "side_effects_detected",
+        "write_operations_made",
+        "external_calls_made",
+        "files_modified",
+        "commands_run",
+        "proof"
+      ],
+      "properties": {
+        "execution_started": {
+          "type": "boolean",
+          "const": false
+        },
+        "actual_action": {
+          "type": "string",
+          "const": "none"
+        },
+        "side_effects_detected": {
+          "type": "boolean",
+          "const": false
+        },
+        "write_operations_made": {
+          "type": "boolean",
+          "const": false
+        },
+        "external_calls_made": {
+          "type": "boolean",
+          "const": false
+        },
+        "files_modified": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "commands_run": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "runtime_action_id": {
+          "type": "string"
+        },
+        "outbound_request_id": {
+          "type": "string"
+        },
+        "proof": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "content_hash"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["hash_chain", "signature", "hash_chain_and_signature"]
+        },
+        "content_hash": {
+          "type": "string",
+          "pattern": "^sha256:.+"
+        },
+        "previous_receipt_hash": {
+          "type": "string",
+          "pattern": "^sha256:.+"
+        },
+        "chain_anchor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "signature": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["algorithm", "value"],
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            },
+            "key_id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["replay_inputs", "verification_steps", "expected_result"],
+      "properties": {
+        "replay_inputs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "verification_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "expected_result": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "safe_next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "human_review_required": {
+      "type": "boolean"
+    }
+  }
+}
