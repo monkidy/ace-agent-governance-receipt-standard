@@ -3,45 +3,41 @@
 ## Current status
 
 ```text
-PUBLIC_READER_FIRST_VISUAL_V0
+HISTORICAL_PUBLIC_REFERENCE_V0
 ```
 
-This repository is an early public standard.
+This repository is an early public receipt/governance standard first published in June 2026.
 
-It is usable as a reference for:
+It remains public because the pattern, examples and validator are independently useful. The ACE name is historical provenance, not the current parent identity of Asso or SYSTASYS.
+
+## What remains useful
 
 - explaining agent receipts to non-technical readers;
-- describing mandate, proposal, action receipt, and refusal receipt concepts;
-- showing concrete refusal receipt examples;
-- validating refusal receipt examples with a small local script;
-- serving as a model for future ACE public repositories.
+- mandate, proposal, action receipt and refusal receipt concepts;
+- concrete refusal receipt examples;
+- a small local validator;
+- reader-first and proof-first public repository patterns.
 
-## What is stable enough to reuse
+## What is historical
 
-- The reader-first README structure.
-- The plain English `START_HERE.md` entry point.
-- The `VISUAL_OVERVIEW.md` flow and table pattern.
-- The core terms: mandate, next best action, outbound action receipt, refusal receipt.
-- The refusal receipt minimum requirements.
-- The example-first structure.
-- The local validator pattern.
+- ACE naming and identity hierarchy;
+- references to future ACE public repositories;
+- the maturity/status labels from the June-era publication.
+
+These should not be interpreted as current SYSTASYS architecture or current runtime state.
 
 ## What is still early
 
 - The JSON schema is intentionally minimal.
 - The validator checks core invariants, not full JSON Schema compliance.
-- No automated CI workflow is enabled yet.
-- The standard is public and declarative; enforcement belongs in implementations.
+- No automated CI workflow is enabled here.
+- Runtime enforcement belongs in current implementations and requires separate proof.
 
 ## What this repo should not claim
 
-This repository should not claim that any private implementation is safe, complete, production-ready, or formally verified.
+This repository should not claim that any private implementation is safe, complete, production-ready, formally verified or currently deployed.
 
-It provides a public standard and examples. Runtime enforcement must be proven separately.
-
-## Current closeout
-
-The current closeout target is complete:
+## Preserved public closeout
 
 ```text
 README: reader-first
@@ -51,6 +47,7 @@ REFUSAL_SCHEMA: present
 REFUSAL_EXAMPLES: present
 VALIDATOR: present
 LICENSE: present
-STATUS: present
-MODEL_CHECKLIST: present
+STATUS: historical reference
+MODEL_CHECKLIST: preserved pattern
+CURRENT_RUNTIME_AUTHORITY: none
 ```
