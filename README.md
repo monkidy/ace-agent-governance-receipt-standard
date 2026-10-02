@@ -1,12 +1,16 @@
 # ACE Agent Governance Receipt Standard
 
+> **Historical public reference, first published June 2026.**
+>
+> This repository preserves an early receipt/governance standard. Its patterns remain reusable, but the ACE name here is historical provenance. This repo is not the current parent architecture of Asso or SYSTASYS and is not a source of current runtime or authority truth.
+
 **A small, practical standard for keeping AI agents bounded, traceable, and revocable.**
 
 New here? Start with [`START_HERE.md`](START_HERE.md). It explains the project in plain English, with no technical background required.
 
 Prefer a visual explanation? Open [`VISUAL_OVERVIEW.md`](VISUAL_OVERVIEW.md) for diagrams and one-screen tables.
 
-Current status: [`PUBLIC_READER_FIRST_VISUAL_V0`](STATUS.md).
+Current status: [`HISTORICAL_PUBLIC_REFERENCE_V0`](STATUS.md).
 
 ## The simple question
 
@@ -52,7 +56,7 @@ This standard is useful for:
 - reviewers who need to inspect what an agent did or refused to do;
 - non-technical stakeholders who need a simple audit trail.
 
-You do not need to understand ACE internals to use this repository.
+You do not need to know the historical ACE context to use the receipt pattern.
 
 ## Read this first
 
@@ -111,7 +115,7 @@ A refusal without proof is only another claim.
 - `VISUAL_OVERVIEW.md` - diagrams and one-screen tables.
 - `STATUS.md` - current maturity and proof status.
 - `CONTRIBUTING.md` - contribution rules for keeping the standard small and clear.
-- `docs/REPO_MODEL_CHECKLIST.md` - reusable checklist for future ACE public repos.
+- `docs/REPO_MODEL_CHECKLIST.md` - historical public-repo checklist, preserved as a reusable pattern.
 - `agent_mandate.v0.md` - template for agent boundaries.
 - `next_best_action.v0.md` - template for proposed actions.
 - `outbound_action_receipt.v0.md` - template for action and refusal records.
