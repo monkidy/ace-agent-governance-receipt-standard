@@ -1,14 +1,14 @@
-# ACE public repo model checklist
+# Public repo model checklist
 
-Use this checklist when turning an ACE-related repository into a public, understandable, reader-first repo.
+> **Historical origin:** this checklist was first written for ACE-related public repositories in June 2026. It is preserved as a reusable reader-first pattern. It is not current SYSTASYS architecture or publication authority.
 
-The goal is not to make every repo bigger.
+Use this checklist when turning a bounded technical repository into a public, understandable, reader-first repo.
 
-The goal is to make every repo clear.
+The goal is not to make every repo bigger. The goal is to make every repo clear.
 
 ## Required public entry points
 
-Every public ACE repo should have:
+A public repository should usually have:
 
 - [ ] `README.md`
 - [ ] `START_HERE.md` when the subject is abstract or unfamiliar
@@ -40,97 +40,26 @@ A public visitor should be able to understand:
 - the current maturity level;
 - what not to assume.
 
-## Visual requirements
-
-If the repo contains a process, system, standard, pipeline, or governance model, include a visual overview.
-
-Good visual elements:
-
-- one flow diagram;
-- one table that maps step to evidence;
-- one example that fits on one screen;
-- one mental model or checklist.
-
-Mermaid diagrams are preferred because they render directly on GitHub and remain versionable as text.
-
 ## Proof-first requirements
 
-Every repo should distinguish:
+Distinguish claim, example, validation, runtime proof and production proof.
 
-- claim;
-- example;
-- validation;
-- runtime proof;
-- production proof.
-
-Avoid saying:
-
-```text
-ready
-safe
-production-grade
-complete
-validated
-```
-
-unless the repo shows evidence for that exact claim.
+Avoid saying `ready`, `safe`, `production-grade`, `complete` or `validated` unless the repository shows evidence for that exact claim.
 
 ## Boundary requirements
 
-Every public ACE repo should say what it does not do.
+Say what the public repository does not do. Examples: it does not grant authority, run agents, replace a policy engine, prove a private implementation safe, or execute live actions.
 
-Examples:
+## Examples and validation
 
-- does not grant authority;
-- does not run agents;
-- does not replace a policy engine;
-- does not prove a private implementation is safe;
-- does not execute live actions.
+Examples should be small, realistic, inspectable and consistent with the repository status.
 
-## Example requirements
-
-Examples should be:
-
-- small;
-- realistic;
-- inspectable;
-- linked from the README;
-- consistent with the repo's status.
-
-## Validation requirements
-
-If the repo contains schemas, examples, or generated artifacts, add the smallest possible local validation command.
-
-Prefer standard-library scripts before adding dependencies.
-
-Example:
-
-```bash
-python tools/validate-refusal-receipts.py
-```
-
-## Status labels
-
-Use explicit status labels.
-
-Suggested labels:
-
-```text
-DRAFT_PUBLIC_V0
-READER_FIRST_PUBLIC_V0
-PUBLIC_READER_FIRST_VISUAL_V0
-USABLE_REFERENCE_V0
-IMPLEMENTATION_REQUIRED
-RUNTIME_PROOF_REQUIRED
-PRODUCTION_PROOF_REQUIRED
-```
+If the repo contains schemas or generated artifacts, add the smallest useful local validation command.
 
 ## Final audit question
-
-Before calling a repo public-ready, ask:
 
 ```text
 Can a smart outsider understand what this is, why it matters, what to open first, what not to assume, and how to verify the examples?
 ```
 
-If the answer is no, the repo is not reader-first yet.
+If the answer is no, the repository is not reader-first yet.
